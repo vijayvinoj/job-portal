@@ -27,17 +27,17 @@ const userSchema = new mongoose.Schema({
 	},
 },
 	{
-		timestamps: ture //Automatically create created and updated time.
-
+		timestamps: true
+});
 
 const bcrypt = require('bcryptjs');
 userSchema.pre('save', async function(next) {
 	if(!this.isModified('password')) {
-		return next();
+		next();
 	}
 	const salt = await bcrypt.genSalt(10);
 	this.password = await bcrypt.hash(this.password, salt);
 
 });
 
-model.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);
